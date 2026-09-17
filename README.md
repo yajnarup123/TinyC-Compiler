@@ -11,7 +11,7 @@ TinyC is a simplified subset of the C programming language. This project focuses
 - AST-like Representation
 - Symbol Table
 - Semantic Analysis
-- Basic Type Checking
+  
 
 ## Technology Used
 
@@ -45,7 +45,7 @@ Validated TinyC Program
 - AST-like Program Representation
 - Symbol Table
 - Semantic Analysis
-- Basic Type Checking
+  
 
 ## Prototype Input
 
