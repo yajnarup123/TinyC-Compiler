@@ -63,6 +63,3 @@ int b = 20;
 float result;
 result = a + b * 2;
 
-## Phase 2 Implementation
-
-The TinyC compiler was extended with semantic analysis, symbol table management, basic type checking, error handling, and intermediate code generation using Three-Address Code (TAC).
