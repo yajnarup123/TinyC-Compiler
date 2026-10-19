@@ -1,4 +1,4 @@
-int a = 10;
-int b = 20;
+int a = 5;
+int b = 8;
 float result;
-result = a + b * 2;
+result = a + b * 3;
