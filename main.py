@@ -4,44 +4,50 @@ from parser import parser
 from semantic import analyze
 from ir_generator import generate
 
+filename = input("Enter test file (valid/invalid): ")
+source_path = f"test_cases/{filename}.c"
 
-def run(filename):
-    try:
-        with open(filename, "r") as f:
-            code = f.read()
+with open(source_path, "r") as file:
+    source_code = file.read()
 
-        print("\nSOURCE CODE:")
-        print(code)
+tokens = lexer(source_code)
 
-        tokens = lexer(code)
-        print("\nTOKENS:")
-        print(tokens)
+print("\n========== SOURCE CODE ==========")
+print(source_code)
 
-        program = parser(tokens)
-        print("\nSYNTAX ANALYSIS: PASSED")
+print("\n========== TOKENS ==========")
+print(f"{'TOKEN':<20} {'TOKEN TYPE':<20}")
+print("-" * 40)
 
-        try:
-            analyze(program)
-            print("SEMANTIC ANALYSIS: PASSED")
-        except Exception as e:
-            print("SEMANTIC ANALYSIS: FAILED")
-            print("Error:", e)
-            return
+KEYWORDS = {
+    "int", "float", "return", "if", "else",
+    "while", "for", "void"
+}
 
-        print("\n")
-        generate(program)
-
-    except Exception as e:
-        print("\nCOMPILATION FAILED")
-        print("Error:", e)
-
-
-if __name__ == "__main__":
-    filename = input(
-        "Enter test file (valid/invalid): "
-    ).strip().lower()
-
-    if filename in ("valid", "invalid"):
-        run(f"test_cases/{filename}.c")
+for token in tokens:
+    if token in KEYWORDS:
+        token_type = "KEYWORD"
+    elif token.isidentifier():
+        token_type = "IDENTIFIER"
+    elif token.replace(".", "", 1).isdigit():
+        token_type = "NUMBER"
+    elif token in {"+", "-", "*", "/", "%", "="}:
+        token_type = "OPERATOR"
     else:
-        print("Invalid choice. Enter 'valid' or 'invalid'.")
+        token_type = "SYMBOL"
+
+    print(f"{token:<20} {token_type:<20}")
+
+print("-" * 40)
+
+print("\n========== SYNTAX ANALYSIS ==========")
+program = parser(tokens)
+print("SYNTAX ANALYSIS: PASSED")
+
+print("\n========== SEMANTIC ANALYSIS ==========")
+analyze(program)
+
+print("\n========== INTERMEDIATE CODE ==========")
+generate(program)
+
+print("\nCOMPILATION COMPLETED")
