@@ -1,103 +1,134 @@
-TinyC Compiler
 
-Project Overview
+#  TinyC Compiler
 
-TinyC Compiler is a Python-based compiler frontend for a simplified subset of the C programming language. The project demonstrates the fundamental stages of compiler design, including lexical analysis, syntax analysis, semantic analysis, symbol table management, and intermediate code generation.
+### A Python-Based Compiler Frontend for a Simplified C Language
 
-The main objective is to understand how source code is processed and transformed through different stages of a compiler.
+TinyC Compiler is an educational project that demonstrates the fundamental stages of compiler design, from lexical analysis to semantic validation and Three-Address Code (TAC) generation.
 
-Objectives
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
+![Domain](https://img.shields.io/badge/Domain-Compiler%20Design-purple)
+![Status](https://img.shields.io/badge/Status-Under%20Development-orange)
 
-Understand the basic architecture of a compiler.
+---
 
-Implement lexical analysis and token classification.
+##  Project Overview
 
-Parse variable declarations, assignments, and expressions.
+The TinyC Compiler processes a simplified subset of C through multiple stages. It identifies tokens, checks syntax, validates variable declarations, maintains a symbol table, and generates intermediate code.
 
-Maintain a symbol table for declared variables.
+###  Objectives
 
-Detect semantic errors such as duplicate and undeclared variables.
+- Understand the fundamental architecture of a compiler.
+- Implement lexical analysis and token classification.
+- Parse supported variable declarations, assignments, and expressions.
+- Maintain a symbol table for declared variables.
+- Detect semantic errors such as duplicate and undeclared variables.
+- Generate Three-Address Code (TAC) as an intermediate representation.
 
-Generate Three-Address Code (TAC) as an intermediate representation.
+---
 
-Features
+##  Features
 
-1. Lexical Analysis
+### 1.  Lexical Analysis
 
 The lexer processes source code and identifies tokens, including:
 
-Keywords
+- Keywords
+- Identifiers
+- Numeric literals
+- Operators
+- Symbols and delimiters
 
-Identifiers
-
-Numeric literals
-
-Operators
-
-Symbols and delimiters
-
-2. Syntax Analysis
+### 2.  Syntax Analysis
 
 The parser checks the syntax of supported TinyC statements, including variable declarations, assignments, and arithmetic expressions.
 
-3. AST Representation
+### 3.  AST Representation
 
-The project defines node classes to represent declarations, assignments, variables, numbers, and operations.
+The project uses node classes to represent program constructs, including declarations, assignments, variables, numbers, and operations.
 
-4. Symbol Table Management
+### 4. Symbol Table Management
 
 The symbol table stores variable names and their declared data types. It supports variable insertion, lookup, and duplicate declaration detection.
 
-5. Semantic Analysis
+### 5.  Semantic Analysis
 
-The semantic analyzer checks variable declarations and usage. It detects duplicate declarations and reports assignments or expressions that reference undeclared variables.
+The semantic analyzer checks variable declarations and usage. It detects duplicate declarations and references to undeclared variables.
 
-6. Intermediate Code Generation
+### 6.  Intermediate Code Generation
 
 The intermediate code generator produces Three-Address Code (TAC) using temporary variables to represent intermediate expression results.
 
-7. Error Handling
+### 7.  Error Handling
 
-The project includes error classes for reporting lexer, parser, and semantic errors.
+The project includes error classes for reporting lexical, syntax, and semantic errors.
 
-System Architecture
+---
 
-TinyC Source Code
-        |
-        v
-Lexical Analysis
-        |
-        v
-Token Stream
-        |
-        v
-Syntax Analysis
-        |
-        v
-AST Representation
-        |
-        v
-Semantic Analysis
-        |
-        v
-Symbol Table Validation
-        |
-        v
-Three-Address Code Generation
+##  System Architecture
 
-Technologies Used
+The following diagram illustrates the major stages of the TinyC compiler.
 
-Programming Language: Python 3
+```text
+             +---------------------------+
+             |      TinyC Source Code    |
+             +---------------------------+
+                          |
+                          v
+             +---------------------------+
+             |      Lexical Analysis     |
+             +---------------------------+
+                          |
+                          v
+             +---------------------------+
+             |       Token Stream        |
+             +---------------------------+
+                          |
+                          v
+             +---------------------------+
+             |      Syntax Analysis      |
+             +---------------------------+
+                          |
+                          v
+             +---------------------------+
+             |    AST Representation     |
+             +---------------------------+
+                          |
+                          v
+             +---------------------------+
+             |     Semantic Analysis     |
+             |       Symbol Table        |
+             +---------------------------+
+                          |
+                          v
+             +---------------------------+
+             | Three-Address Code (TAC)  |
+             |        Generation         |
+             +---------------------------+
+                          |
+                          v
+             +---------------------------+
+             |       Generated TAC       |
+             +---------------------------+
+```
 
-Development Environment: Visual Studio Code
+---
 
-Version Control: Git
+## Technology Stack
 
-Repository Hosting: GitHub
+| Technology | Purpose |
+|---|---|
+| Python 3 | Compiler implementation |
+| Visual Studio Code | Development environment |
+| Git | Version control |
+| GitHub | Source-code hosting |
 
-Project Structure
+---
 
+##  Project Structure
+
+```text
 TinyC-Compiler/
+│
 ├── main.py
 ├── lexer.py
 ├── parser.py
@@ -107,131 +138,122 @@ TinyC-Compiler/
 ├── ir_generator.py
 ├── errors.py
 ├── tinyc_semantic_analysis.py
+│
 ├── test_cases/
 │   ├── valid.c
 │   └── invalid.c
+│
 └── README.md
+```
 
-Module Description
+###  Module Description
 
-File
+| File | Responsibility |
+|---|---|
+| `main.py` | Runs the compiler pipeline |
+| `lexer.py` | Performs lexical analysis |
+| `parser.py` | Performs syntax analysis |
+| `ast.py` | Defines AST node classes |
+| `symbol_table.py` | Manages variable information |
+| `semantic.py` | Performs semantic checks |
+| `ir_generator.py` | Generates intermediate code |
+| `errors.py` | Defines compiler error classes |
+| `test_cases/` | Contains sample input programs |
 
-Description
+---
 
-main.py
+## 🚀 Getting Started
 
-Runs the compiler pipeline and displays results
+### 📋 Prerequisites
 
-lexer.py
+- Python 3 installed on your system
+- Git installed if you want to clone the repository
 
-Performs lexical analysis
+### 1. Clone the Repository
 
-parser.py
-
-Performs syntax analysis
-
-ast.py
-
-Defines AST node classes
-
-symbol_table.py
-
-Stores and retrieves variable information
-
-semantic.py
-
-Performs semantic checks
-
-ir_generator.py
-
-Generates Three-Address Code
-
-errors.py
-
-Defines compiler error classes
-
-test_cases/valid.c
-
-Contains valid sample input
-
-test_cases/invalid.c
-
-Contains input for error testing
-
-Requirements
-
-Python 3
-
-Visual Studio Code or another Python-compatible editor
-
-Git (optional, for cloning the repository)
-
-Installation and Execution
-
-Step 1: Clone the Repository
-
+```bash
 git clone https://github.com/yajnarup123/TinyC-Compiler.git
+```
 
-Step 2: Open the Project Directory
+### 2. Navigate to the Project Folder
 
+```bash
 cd TinyC-Compiler
+```
 
-Step 3: Run the Compiler
+### 3. Run the Compiler
 
+```bash
 python main.py
+```
 
-Step 4: Select a Test Case
+When prompted, enter `valid` or `invalid` to select a test case.
 
-When prompted, enter:
+---
 
-valid to run the valid test case.
+##  Sample Input
 
-invalid to run the invalid test case.
+The following program demonstrates variable declarations, arithmetic expressions, and assignments.
 
-The compiler displays the source code, token information, syntax analysis results, semantic analysis results, and intermediate code when the program passes the required checks.
-
-Sample Input
-
+```c
 int count = 10;
 float price = 25.5;
 int total = count * 2;
 int result = total + 5;
 result = result - 3;
 price = price + 1.5;
+```
 
-Testing
+---
 
-The project includes test files to demonstrate compiler behavior.
+## Testing
 
-Valid Input
+The project includes sample test cases to demonstrate compiler behavior.
 
-The valid test case demonstrates variable declarations, arithmetic expressions, assignments, and intermediate code generation.
+| Test File | Purpose |
+|---|---|
+| `valid.c` | Tests supported declarations, expressions, and assignments |
+| `invalid.c` | Tests semantic error detection, such as undeclared variables |
 
-Invalid Input
+When compilation succeeds, the compiler displays analysis results and generated intermediate code.
 
-The invalid test case includes an assignment to an undeclared variable:
+### Example: Semantic Error Detection
 
+```c
 int a = 5;
 b = a + 2;
+```
 
-The semantic analyzer reports that b has not been declared. Compilation stops when this semantic error is raised.
+Since `b` has not been declared, the semantic analyzer reports an undeclared-variable error.
 
-Current Scope and Limitations
+---
 
-TinyC is an educational compiler frontend and does not implement the complete C programming language.
+## 📌 Current Scope and Limitations
 
-The current implementation focuses on the syntax and semantic checks supported by its lexer and parser. It does not generate native machine code.
+TinyC is an educational compiler frontend, not a complete implementation of the C programming language.
 
-Future Enhancements
+- Supported syntax is limited to the constructs implemented in the lexer and parser.
+- Semantic checks are limited to those implemented in the semantic analyzer.
+- The compiler generates intermediate code rather than native machine code.
 
-Support for conditional statements and loops
+---
 
-Expanded data type compatibility checks
+## Future Enhancements
 
-Improved syntax and semantic error reporting
+- Expanded data type compatibility checking
+- Support for conditional statements and loops
+- Improved syntax and semantic error reporting
+- Additional automated test cases
+- Intermediate code optimization
+- Support for more C language constructs
 
-Additional automated test cases
+---
 
-Intermediate code optimization
+## Author
 
-Support for more C language constructs
+**Yajnarup Reddy**
+
+---
+
+*An educational project exploring the fundamentals of compiler design and implementation.*
+
