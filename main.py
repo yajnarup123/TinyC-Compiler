@@ -1,53 +1,73 @@
 
-from lexer import lexer
+from contextlib import redirect_stdout
+from io import StringIO
+
+import lexer
 from parser import parser
 from semantic import analyze
 from ir_generator import generate
+from assembly_generator import generate_assembly
 
-filename = input("Enter test file (valid/invalid): ")
-source_path = f"test_cases/{filename}.c"
 
-with open(source_path, "r") as file:
+# Find the lexer function
+lexer_function = None
+
+for name in ("tokenize", "lex", "lexer", "scan", "lexical_analysis"):
+    if callable(getattr(lexer, name, None)):
+        lexer_function = getattr(lexer, name)
+        break
+
+if lexer_function is None:
+    raise ImportError(
+        "Could not identify the lexer function in lexer.py"
+    )
+
+
+# Read source code
+with open("test_cases/valid.c", "r") as file:
     source_code = file.read()
 
-tokens = lexer(source_code)
 
-print("\n========== SOURCE CODE ==========")
-print(source_code)
+# LEXICAL ANALYSIS
+print("\n========== LEXICAL ANALYSIS ==========")
 
-print("\n========== TOKENS ==========")
-print(f"{'TOKEN':<20} {'TOKEN TYPE':<20}")
-print("-" * 40)
-
-KEYWORDS = {
-    "int", "float", "return", "if", "else",
-    "while", "for", "void"
-}
+tokens = lexer_function(source_code)
 
 for token in tokens:
-    if token in KEYWORDS:
-        token_type = "KEYWORD"
-    elif token.isidentifier():
-        token_type = "IDENTIFIER"
-    elif token.replace(".", "", 1).isdigit():
-        token_type = "NUMBER"
-    elif token in {"+", "-", "*", "/", "%", "="}:
-        token_type = "OPERATOR"
-    else:
-        token_type = "SYMBOL"
+    print(token)
 
-    print(f"{token:<20} {token_type:<20}")
 
-print("-" * 40)
-
+# SYNTAX ANALYSIS
 print("\n========== SYNTAX ANALYSIS ==========")
+
 program = parser(tokens)
 print("SYNTAX ANALYSIS: PASSED")
 
-print("\n========== SEMANTIC ANALYSIS ==========")
-analyze(program)
 
-print("\n========== INTERMEDIATE CODE ==========")
-generate(program)
+# SEMANTIC ANALYSIS
+print("\n========== SEMANTIC ANALYSIS ==========")
+
+analyze(program)
+print("SEMANTIC ANALYSIS: PASSED")
+
+
+# INTERMEDIATE CODE GENERATION
+print("\n========== THREE-ADDRESS CODE ==========")
+
+tac_output = StringIO()
+
+with redirect_stdout(tac_output):
+    generate(program)
+
+tac_code = tac_output.getvalue()
+print(tac_code)
+
+
+# ASSEMBLY CODE GENERATION
+print("\n========== GENERATED ASSEMBLY CODE ==========")
+
+assembly_code = generate_assembly(tac_code)
+print(assembly_code)
+
 
 print("\nCOMPILATION COMPLETED")
